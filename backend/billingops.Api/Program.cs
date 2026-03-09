@@ -32,6 +32,14 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
 
 builder.Services.AddAuthorization();
 
+builder.Services.ConfigureApplicationCookie(options => 
+{
+    options.Cookie.HttpOnly = true;
+    options.LoginPath = "/lgoin"; 
+    options.LogoutPath = "/logout"; 
+    options.AccessDeniedPath = "/access-denied";
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
