@@ -4,8 +4,11 @@ public class Invoice
 {
     public int Id { get; set; }
     public string InvoiceNumber { get; set; } = string.Empty;
+    public string ClientName { get; set; } = string.Empty;
+    public string ClientEmail { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
     public decimal Amount { get; set; }
-    public DateTime IssuedAt { get; set; } = DateTime.UtcNow;
+    public DateTime IssueDate { get; set; } = DateTime.UtcNow;
     public DateTime DueDate { get; set; }
     public string Status { get; set; } = "Draft";
 

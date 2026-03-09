@@ -123,6 +123,18 @@ namespace billingops.Api.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ClientEmail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("TEXT");
 
@@ -130,7 +142,7 @@ namespace billingops.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("IssuedAt")
+                    b.Property<DateTime>("IssueDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Status")

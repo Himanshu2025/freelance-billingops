@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "WS14BRCTYDY=",
+  "dgSpecHash": "WXWKBQQ2u+g=",
   "success": true,
-  "projectFilePath": "/Users/himanshukulkarni/Developer/code/billingops/backend/billingops.Api/billingops.Api.csproj",
+  "projectFilePath": "/Users/himanshukulkarni/Developer/code/billingops/backend/BillingOps.Api/billingops.Api.csproj",
   "expectedPackageFiles": [
     "/Users/himanshukulkarni/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/himanshukulkarni/.nuget/packages/microsoft.aspnetcore.identity.entityframeworkcore/10.0.3/microsoft.aspnetcore.identity.entityframeworkcore.10.0.3.nupkg.sha512",
