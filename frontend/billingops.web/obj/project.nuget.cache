@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "NaGztSuEFBM=",
+  "success": true,
+  "projectFilePath": "/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/billingops.web.csproj",
+  "expectedPackageFiles": [
+    "/Users/himanshukulkarni/.nuget/packages/microsoft.aspnetcore.app.internal.assets/10.0.3/microsoft.aspnetcore.app.internal.assets.10.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
