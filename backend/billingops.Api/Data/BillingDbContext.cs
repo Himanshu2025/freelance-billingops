@@ -1,15 +1,16 @@
 using BillingOps.Api.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BillingOps.Api.Data;
 
-public class BillingDbContext : DbContext
+public class BillingDbContext : IdentityDbContext<ApplicationUser>
 {
     public BillingDbContext(DbContextOptions<BillingDbContext> options) : base(options)
     {
     }
 
-    public DbSet<User> Users => Set<User>();
     public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<WebhookEvent> WebhookEvents => Set<WebhookEvent>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
@@ -18,17 +19,13 @@ public class BillingDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<User>()
-            .HasIndex(u => u.Email)
-            .IsUnique();
-
         modelBuilder.Entity<WebhookEvent>()
             .HasIndex(w => w.EventId)
             .IsUnique();
 
         modelBuilder.Entity<Invoice>()
             .HasOne(i => i.User)
-            .WithMany(u => u.Invoices)
+            .WithMany()
             .HasForeignKey(i => i.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }

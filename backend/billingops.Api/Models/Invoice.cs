@@ -9,6 +9,6 @@ public class Invoice
     public DateTime DueDate { get; set; }
     public string Status { get; set; } = "Draft";
 
-    public int UserId { get; set; }
-    public User? User { get; set; }
+    public string UserId { get; set; } = string.Empty;
+    public ApplicationUser? User { get; set; }
 }
