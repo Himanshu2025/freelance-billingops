@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/billingops.web.csproj": {}
+    "/Users/himanshukulkarni/Developer/code/billingops/frontend/BillingOps.web/billingops.web.csproj": {}
   },
   "projects": {
-    "/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/billingops.web.csproj": {
+    "/Users/himanshukulkarni/Developer/code/billingops/frontend/BillingOps.web/billingops.web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/billingops.web.csproj",
+        "projectUniqueName": "/Users/himanshukulkarni/Developer/code/billingops/frontend/BillingOps.web/billingops.web.csproj",
         "projectName": "billingops.web",
-        "projectPath": "/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/billingops.web.csproj",
+        "projectPath": "/Users/himanshukulkarni/Developer/code/billingops/frontend/BillingOps.web/billingops.web.csproj",
         "packagesPath": "/Users/himanshukulkarni/.nuget/packages/",
-        "outputPath": "/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/obj/",
+        "outputPath": "/Users/himanshukulkarni/Developer/code/billingops/frontend/BillingOps.web/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/himanshukulkarni/.nuget/NuGet/NuGet.Config"

@@ -1,0 +1,64 @@
+@page "/register"
+@rendermode InteractiveServer
+
+@inject billingops.web.Services.AuthApiService AuthApiService
+@inject NavigationManager NavigationManager
+
+<PageTitle>Register</PageTitle>
+
+<h1>Register</h1>
+
+<div class="card p-3" style="max-width: 500px;">
+    <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input class="form-control" @bind="request.FullName" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input class="form-control" @bind="request.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input class="form-control" type="password" @bind="request.Password" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Confirm Password</label>
+        <input class="form-control" type="password" @bind="request.ConfirmPassword" />
+    </div>
+
+    <button class="btn btn-primary" @onclick="RegisterAsync" disabled="@isLoading">Create Account</button>
+
+    @if (!string.IsNullOrWhiteSpace(message))
+    {
+        <div class="alert @(isError ? "alert-danger" : "alert-success") mt-3">
+            @message
+        </div>
+    }
+</div>
+
+@code {
+    private readonly billingops.web.Models.RegisterRequest request = new();
+    private string message = string.Empty;
+    private bool isError;
+    private bool isLoading;
+
+    private async Task RegisterAsync()
+    {
+        isLoading = true;
+        message = string.Empty;
+
+        var result = await AuthApiService.RegisterAsync(request);
+
+        isLoading = false;
+        isError = !result.Success;
+        message = result.Message;
+
+        if (result.Success)
+        {
+            NavigationManager.NavigateTo("/invoices");
+        }
+    }
+}

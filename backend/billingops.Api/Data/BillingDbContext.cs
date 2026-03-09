@@ -11,7 +11,7 @@ public class BillingDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<Invoice> invoices => Set<Invoice>();
+    public DbSet<Invoice> Invoices => Set<Invoice>();
     public DbSet<WebhookEvent> WebhookEvents => Set<WebhookEvent>();
     public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 

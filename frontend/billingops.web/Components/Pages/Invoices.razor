@@ -1,0 +1,79 @@
+@page "/invoices"
+@rendermode InteractiveServer
+
+@inject billingops.web.Services.InvoiceApiService InvoiceApiService
+
+<PageTitle>Invoices</PageTitle>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">My Invoices</h1>
+    <a class="btn btn-primary" href="/create-invoice">Create Invoice</a>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@if (isLoading)
+{
+    <p><em>Loading invoices...</em></p>
+}
+else if (invoices.Count == 0)
+{
+    <div class="alert alert-info">No invoices found.</div>
+}
+else
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Invoice #</th>
+                <th>Client</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Issue Date</th>
+                <th>Due Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var invoice in invoices)
+            {
+                <tr>
+                    <td>@invoice.InvoiceNumber</td>
+                    <td>@invoice.ClientName</td>
+                    <td>@invoice.ClientEmail</td>
+                    <td>@invoice.Amount.ToString("C")</td>
+                    <td>@invoice.IssueDate.ToShortDateString()</td>
+                    <td>@invoice.DueDate.ToShortDateString()</td>
+                    <td>@invoice.Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private readonly List<billingops.web.Models.InvoiceResponse> invoices = new();
+    private bool isLoading = true;
+    private string errorMessage = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var result = await InvoiceApiService.GetInvoicesAsync();
+            invoices.Clear();
+            invoices.AddRange(result);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Could not load invoices: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+}

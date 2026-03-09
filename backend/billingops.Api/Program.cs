@@ -35,7 +35,7 @@ builder.Services.AddAuthorization();
 builder.Services.ConfigureApplicationCookie(options => 
 {
     options.Cookie.HttpOnly = true;
-    options.LoginPath = "/lgoin"; 
+    options.LoginPath = "/login"; 
     options.LogoutPath = "/logout"; 
     options.AccessDeniedPath = "/access-denied";
 });
