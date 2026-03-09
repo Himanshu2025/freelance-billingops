@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("billingops.web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4bb5462dbc1c0d1d7e967718c643a373452a0455")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d600927f534288b006d4c2fb352fef5259be62f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("billingops.web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("billingops.web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

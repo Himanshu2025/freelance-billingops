@@ -83,3 +83,4 @@
 /Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/obj/Debug/net10.0/billingops.web.pdb
 /Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/obj/Debug/net10.0/billingops.web.genruntimeconfig.cache
 /Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/obj/Debug/net10.0/ref/billingops.web.dll
+/Users/himanshukulkarni/Developer/code/billingops/frontend/billingops.web/obj/Debug/net10.0/billingops.web.sourcelink.json
