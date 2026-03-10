@@ -14,8 +14,12 @@ RUN dotnet publish "billingops.Api.csproj" -c Release -o /app/publish /p:UseAppH
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
+# Create directories for sqlite file and data protection keys
+RUN mkdir -p /app/keys /app/data
+
 # Ensure ASP.NET Core listens on port 8080 inside the container
 ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Production
 EXPOSE 8080
 
 # Copy published output from the build stage
