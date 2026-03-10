@@ -1,6 +1,7 @@
 using BillingOps.Api.Data;
 using BillingOps.Api.Dtos;
 using BillingOps.Api.Models;
+using BillingOps.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +16,16 @@ public class InvoicesController : ControllerBase
 {
     private readonly BillingDbContext _dbContext;
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly InvoicePdfService _invoicePdfService;
 
-    public InvoicesController(BillingDbContext dbContext, UserManager<ApplicationUser> userManager)
+    public InvoicesController(
+        BillingDbContext dbContext,
+        UserManager<ApplicationUser> userManager,
+        InvoicePdfService invoicePdfService)
     {
         _dbContext = dbContext;
         _userManager = userManager;
+        _invoicePdfService = invoicePdfService;
     }
 
     [HttpGet]
@@ -58,6 +64,33 @@ public class InvoicesController : ControllerBase
         }
 
         return Ok(ToResponse(invoice));
+    }
+
+    [HttpGet("{id:int}/pdf")]
+    public async Task<IActionResult> DownloadInvoicePdf(int id)
+    {
+        var user = await _userManager.GetUserAsync(User);
+        if (user == null)
+        {
+            return Unauthorized(new { message = "User is not authenticated." });
+        }
+
+        var invoice = await _dbContext.Invoices
+            .Include(i => i.User)
+            .FirstOrDefaultAsync(i => i.Id == id && i.UserId == user.Id);
+
+        if (invoice == null)
+        {
+            return NotFound(new { message = "Invoice not found." });
+        }
+
+        var pdfBytes = _invoicePdfService.GenerateInvoicePdf(invoice);
+        var safeInvoiceNumber = string.IsNullOrWhiteSpace(invoice.InvoiceNumber)
+            ? $"invoice-{invoice.Id}"
+            : invoice.InvoiceNumber.Replace('/', '-').Replace(' ', '-');
+        var fileName = $"{safeInvoiceNumber}.pdf";
+
+        return File(pdfBytes, "application/pdf", fileName);
     }
 
     [HttpPost]

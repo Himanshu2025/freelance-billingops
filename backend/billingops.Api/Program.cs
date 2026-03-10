@@ -1,9 +1,13 @@
 using BillingOps.Api.Data;
 using BillingOps.Api.Models;
+using BillingOps.Api.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +35,7 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
     .AddIdentityCookies();
 
 builder.Services.AddAuthorization();
+builder.Services.AddScoped<InvoicePdfService>();
 
 builder.Services.ConfigureApplicationCookie(options => 
 {
