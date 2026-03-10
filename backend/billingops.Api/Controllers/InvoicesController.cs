@@ -5,6 +5,7 @@ using BillingOps.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 
 namespace BillingOps.Api.Controllers;
@@ -12,6 +13,7 @@ namespace BillingOps.Api.Controllers;
 [ApiController]
 [Authorize]
 [Route("api/[controller]")]
+[EnableRateLimiting("general")]
 public class InvoicesController : ControllerBase
 {
     private readonly BillingDbContext _dbContext;
