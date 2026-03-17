@@ -17,6 +17,42 @@ QuestPDF.Settings.License = LicenseType.Community;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        var configuredOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>()
+            ?? Array.Empty<string>();
+
+        if (configuredOrigins.Length > 0)
+        {
+            policy
+                .WithOrigins(configuredOrigins)
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials();
+            return;
+        }
+
+        // Fallback for demos: allow local dev and Render-hosted frontends.
+        policy
+            .SetIsOriginAllowed(origin =>
+            {
+                if (!Uri.TryCreate(origin, UriKind.Absolute, out var uri))
+                {
+                    return false;
+                }
+
+                var host = uri.Host;
+                return host.Equals("localhost", StringComparison.OrdinalIgnoreCase)
+                    || host.Equals("127.0.0.1", StringComparison.OrdinalIgnoreCase)
+                    || host.EndsWith(".onrender.com", StringComparison.OrdinalIgnoreCase);
+            })
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -88,7 +124,9 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
         ? CookieSecurePolicy.SameAsRequest
         : CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SameSite = builder.Environment.IsDevelopment()
+        ? SameSiteMode.Lax
+        : SameSiteMode.None;
     options.LoginPath = "/login"; 
     options.LogoutPath = "/logout"; 
     options.AccessDeniedPath = "/access-denied";
@@ -144,6 +182,7 @@ if (useHttpsRedirection)
 }
 
 app.UseRateLimiter();
+app.UseCors("Frontend");
 
 app.UseAuthentication();
 app.UseAuthorization();
