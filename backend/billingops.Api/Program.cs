@@ -17,40 +17,6 @@ QuestPDF.Settings.License = LicenseType.Community;
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-var configuredCorsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
-var defaultCorsOrigins = new[]
-{
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://localhost:5173",
-    "http://localhost:4173",
-    "https://localhost:4173",
-    "https://freelance-billingops.vercel.app"
-};
-
-var allowedCorsOrigins = (configuredCorsOrigins ?? Array.Empty<string>())
-    .Where(origin => !string.IsNullOrWhiteSpace(origin))
-    .Select(origin => origin.Trim().TrimEnd('/'))
-    .Distinct(StringComparer.OrdinalIgnoreCase)
-    .ToArray();
-
-if (allowedCorsOrigins.Length == 0)
-{
-    allowedCorsOrigins = defaultCorsOrigins;
-}
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("FrontendCors", policy =>
-    {
-        policy
-            .WithOrigins(allowedCorsOrigins)
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowCredentials();
-    });
-});
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
@@ -178,8 +144,6 @@ if (useHttpsRedirection)
 }
 
 app.UseRateLimiter();
-
-app.UseCors("FrontendCors");
 
 app.UseAuthentication();
 app.UseAuthorization();
