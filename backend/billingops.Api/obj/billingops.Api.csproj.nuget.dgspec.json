@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/himanshukulkarni/Developer/code/billingops/backend/BillingOps.Api/billingops.Api.csproj": {}
+    "/Users/himanshukulkarni/Developer/code/billingops/backend/billingops.Api/billingops.Api.csproj": {}
   },
   "projects": {
-    "/Users/himanshukulkarni/Developer/code/billingops/backend/BillingOps.Api/billingops.Api.csproj": {
+    "/Users/himanshukulkarni/Developer/code/billingops/backend/billingops.Api/billingops.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/himanshukulkarni/Developer/code/billingops/backend/BillingOps.Api/billingops.Api.csproj",
+        "projectUniqueName": "/Users/himanshukulkarni/Developer/code/billingops/backend/billingops.Api/billingops.Api.csproj",
         "projectName": "billingops.Api",
-        "projectPath": "/Users/himanshukulkarni/Developer/code/billingops/backend/BillingOps.Api/billingops.Api.csproj",
+        "projectPath": "/Users/himanshukulkarni/Developer/code/billingops/backend/billingops.Api/billingops.Api.csproj",
         "packagesPath": "/Users/himanshukulkarni/.nuget/packages/",
-        "outputPath": "/Users/himanshukulkarni/Developer/code/billingops/backend/BillingOps.Api/obj/",
+        "outputPath": "/Users/himanshukulkarni/Developer/code/billingops/backend/billingops.Api/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/himanshukulkarni/.nuget/NuGet/NuGet.Config"
