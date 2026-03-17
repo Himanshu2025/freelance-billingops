@@ -2,11 +2,14 @@ using BillingOps.Api.Models;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Globalization;
 
 namespace BillingOps.Api.Services;
 
 public class InvoicePdfService
 {
+    private static readonly CultureInfo UsdCulture = new("en-US");
+
     public byte[] GenerateInvoicePdf(Invoice invoice)
     {
         var freelancerName = invoice.User?.FullName ?? "Freelancer";
@@ -55,7 +58,7 @@ public class InvoicePdfService
 
                 page.Footer().AlignRight().Column(column =>
                 {
-                    column.Item().Text($"Total Amount: {invoice.Amount:C}").Bold().FontSize(14);
+                    column.Item().Text($"Total Amount: {invoice.Amount.ToString("C", UsdCulture)}").Bold().FontSize(14);
                 });
             });
         }).GeneratePdf();
