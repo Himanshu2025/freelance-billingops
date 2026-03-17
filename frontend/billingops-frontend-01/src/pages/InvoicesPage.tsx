@@ -5,6 +5,7 @@ import { Plus } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import StatusBadge from '../components/ui/StatusBadge';
+import { downloadInvoicePdf } from '../api/invoices';
 import { useCreateInvoice, useInvoices } from '../hooks/useInvoices';
 import { formatCurrency, formatDate } from '../utils/formatters';
 import type { CreateInvoiceRequest } from '../types/invoice';
@@ -13,6 +14,7 @@ export default function InvoicesPage() {
   const { data: invoices, isLoading, isError } = useInvoices();
   const { mutateAsync: createInvoice, isPending: isCreating, error: createError } = useCreateInvoice();
   const [showCreateForm, setShowCreateForm] = useState(false);
+  const [downloadingId, setDownloadingId] = useState<number | null>(null);
   const [form, setForm] = useState<CreateInvoiceRequest>({
     clientName: '',
     clientEmail: '',
@@ -38,6 +40,23 @@ export default function InvoicesPage() {
       status: 'Draft',
     });
     setShowCreateForm(false);
+  };
+
+  const handleDownloadPdf = async (invoiceId: number, invoiceNumber: string) => {
+    try {
+      setDownloadingId(invoiceId);
+      const pdfBlob = await downloadInvoicePdf(invoiceId);
+      const url = URL.createObjectURL(pdfBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${invoiceNumber || `invoice-${invoiceId}`}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } finally {
+      setDownloadingId(null);
+    }
   };
 
   return (
@@ -157,6 +176,7 @@ export default function InvoicesPage() {
                   <th className="pb-3 pr-4">Due Date</th>
                   <th className="pb-3 pr-4">Total</th>
                   <th className="pb-3">Status</th>
+                  <th className="pb-3 text-right">PDF</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-50">
@@ -172,11 +192,21 @@ export default function InvoicesPage() {
                     <td className="py-3">
                       <StatusBadge status={inv.status} />
                     </td>
+                    <td className="py-3 text-right">
+                      <Button
+                        size="sm"
+                        variant="secondary"
+                        disabled={downloadingId === inv.id}
+                        onClick={() => void handleDownloadPdf(inv.id, inv.invoiceNumber)}
+                      >
+                        {downloadingId === inv.id ? 'Generating...' : 'Download'}
+                      </Button>
+                    </td>
                   </tr>
                 ))}
                 {invoices.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="py-8 text-center text-gray-400">
+                    <td colSpan={7} className="py-8 text-center text-gray-400">
                       No invoices yet. Create your first one!
                     </td>
                   </tr>
