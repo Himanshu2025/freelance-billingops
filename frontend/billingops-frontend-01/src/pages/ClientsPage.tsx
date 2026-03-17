@@ -4,7 +4,7 @@ import { Plus, Mail, Phone, Building2 } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import { useClients, useCreateClient } from '../hooks/useClients';
-import type { CreateClientRequest } from '../types/client';
+import type { Client, CreateClientRequest } from '../types/client';
 
 export default function ClientsPage() {
   const { data: clients, isLoading, isError } = useClients();
@@ -113,7 +113,7 @@ export default function ClientsPage() {
 
       {clients && (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {clients.map((client) => (
+          {clients.map((client: Client) => (
             <Card key={client.id} className="flex flex-col gap-3">
               <div>
                 <h3 className="font-semibold text-gray-900">{client.name}</h3>
